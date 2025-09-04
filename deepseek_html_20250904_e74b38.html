@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AL-MISBAH FRIENDS - Student Result Portal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        header {
+            background: #4A6DA7;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo {
+            font-family: 'Algerian', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            border-color: #4A6DA7;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(74, 109, 167, 0.2);
+        }
+        
+        button {
+            background: #4A6DA7;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            background: #3a5a8f;
+        }
+        
+        .secondary-btn {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .secondary-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .success {
+            background-color: #e8f4fd;
+            border-left: 5px solid #007BFF;
+            color: #004085;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+            color: #721c24;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .portal-section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #4A6DA7;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .category-title {
+            font-size: 18px;
+            color: #3a5a8f;
+            margin: 20px 0 10px 0;
+            padding-left: 10px;
+            border-left: 4px solid #4A6DA7;
+        }
+        
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .result-table th, .result-table td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .result-table th {
+            background-color: #4A6DA7;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .result-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .result-table tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .points-input {
+            width: 80px;
+            text-align: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .admin-controls {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .admin-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #4A6DA7;
+            font-weight: 600;
+        }
+        
+        .logout-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            width: auto;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .student-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+        }
+        
+        .student-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .student-item:last-child {
+            border-bottom: none;
+        }
+        
+        .total-points {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+            background: #e8f4fd;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 600px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .logout-btn {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-top: 15px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginPage">
+        <header>
+            <div class="logo">AL-MISBAH FRIENDS</div>
+            <div class="header-subtitle">Student Result Portal</div>
+        </header>
+        
+        <div class="content">
+            <div class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password">
+                </div>
+                
+                <div class="form-group">
+                    <label for="userType">Login As</label>
+                    <select id="userType">
+                        <option value="student">Student</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                
+                <button onclick="login()">Login</button>
+                
+                <div id="loginError" class="message error">
+                    Invalid username or password. Please try again.
+                </div>
+                
+                <div class="user-info">
+                    <p><strong>Demo Credentials:</strong></p>
+                    <p>Admin: ahad837 / syed</p>
+                    <p>Student: Use your name as username and password</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="adminPortal">
+        <header>
+            <div class="logo">AL-MISBAH FRIENDS</div>
+            <div class="header-subtitle">Admin Portal - Result Management</div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </header>
+        
+        <div class="content">
+            <div class="user-info">
+                <h2>Welcome, Admin</h2>
+                <p>You can manage student results from this portal</p>
+            </div>
+            
+            <div class="portal-section">
+                <h3 class="section-title">Assign Points to Students</h3>
+                
+                <div class="form-group">
+                    <label for="studentSelect">Select Student</label>
+                    <select id="studentSelect"></select>
+                </div>
+                
+                <h4 class="category-title">First Language</h4>
+                <div class="form-group">
+                    <label for="englishPoints">English Points</label>
+                    <input type="number" id="englishPoints" class="points-input" min="0" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="arabicPoints">Arabic Points</label>
+                    <input type="number" id="arabicPoints" class="points-input" min="0" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="urduPoints">Urdu Points</label>
+                    <input type="number" id="urduPoints" class="points-input" min="0" value="0">
+                </div>
+                
+                <h4 class="category-title">SRDB Board</h4>
+                <div class="form-group">
+                    <label for="itPoints">IT Club Points</label>
+                    <input type="number" id="itPoints" class="points-input" min="0" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="socialPoints">Social Workers Club Points</label>
+                    <input type="number" id="socialPoints" class="points-input" min="0" value="0">
+                </div>
+                
+                <div class="form-group">
+                    <label for="scienceMathPoints">Science & Math Club Points</label>
+                    <input type="number" id="scienceMathPoints" class="points-input" min="0" value="0">
+                </div>
+                
+                <button onclick="savePoints()">Save Points</button>
+                <div id="saveMessage" class="message"></div>
+            </div>
+            
+            <div class="portal-section">
+                <h3 class="section-title">All Students</h3>
+                <div class="student-list" id="allStudentsList">
+                    <!-- Student list will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container hidden" id="studentPortal">
+        <header>
+            <div class="logo">AL-MISBAH FRIENDS</div>
+            <div class="header-subtitle">Student Result Portal</div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </header>
+        
+        <div class="content">
+            <div class="user-info">
+                <h2 id="studentWelcome">Welcome, Student</h2>
+                <p>View your results below</p>
+            </div>
+            
+            <div class="portal-section">
+                <h3 class="section-title">Your Results</h3>
+                
+                <h4 class="category-title">First Language</h4>
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="languageResults">
+                        <tr>
+                            <td>English</td>
+                            <td id="englishResult">0</td>
+                        </tr>
+                        <tr>
+                            <td>Arabic</td>
+                            <td id="arabicResult">0</td>
+                        </tr>
+                        <tr>
+                            <td>Urdu</td>
+                            <td id="urduResult">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h4 class="category-title">SRDB Board</h4>
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Club</th>
+                            <th>Points</th>
+                        </tr>
+                    </thead>
+                    <tbody id="srdbResults">
+                        <tr>
+                            <td>IT Club</td>
+                            <td id="itResult">0</td>
+                        </tr>
+                        <tr>
+                            <td>Social Workers Club</td>
+                            <td id="socialResult">0</td>
+                        </tr>
+                        <tr>
+                            <td>Science & Math Club</td>
+                            <td id="scienceMathResult">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="total-points">
+                    Total Points: <span id="totalPoints">0</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Student data
+        const students = [
+            "Ahsan Ansari", "Sahil Ali", "Abdul Alam", "Atif Shaikh", 
+            "Huzaifa Ansari", "Zeeshan Khan", "Md. Mustafa", "Md. Nematullah Raza", 
+            "Faizan Raza", "Kaish Raza", "Mokarram Faiz", "Mubashir Raza", 
+            "Yusuf Ali", "Zulqarnain", "Ansari Ahmed", "Junaid Ansari", 
+            "Shabaz Ansari", "Aman Arshad", "Arif Khan", "Meraj Khan", 
+            "Farhan Raza", "Esmatullah", "Tausif Raza", "Shamsuddin Hashmi", 
+            "Hashmat Raza", "Syed Abdul Ahad", "Hamza Shaikh", "Md. Anas Ansari", 
+            "Mohammed Ahad Abbasi", "Shoaib NPL", "Ahmed Raza"
+        ];
+
+        // Initialize student results if not exists
+        function initializeStudentResults() {
+            if (!localStorage.getItem('studentResults')) {
+                const results = {};
+                
+                students.forEach(student => {
+                    results[student] = {
+                        english: 0,
+                        arabic: 0,
+                        urdu: 0,
+                        it: 0,
+                        social: 0,
+                        scienceMath: 0
+                    };
+                });
+                
+                localStorage.setItem('studentResults', JSON.stringify(results));
+            }
+            
+            return JSON.parse(localStorage.getItem('studentResults'));
+        }
+
+        let studentResults = initializeStudentResults();
+        let currentUser = null;
+
+        // Login function
+        function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const userType = document.getElementById('userType').value;
+            const errorBox = document.getElementById('loginError');
+
+            if (userType === 'admin') {
+                if (username === 'ahad837' && password === 'syed') {
+                    currentUser = { username, role: 'admin' };
+                    showAdminPortal();
+                } else if (username === 'suhail' && password === 'ahad123') {
+                    currentUser = { username, role: 'viewer' };
+                    showAdminPortal();
+                } else {
+                    showError(errorBox);
+                }
+            } else {
+                // Student login - username and password are the student's name
+                if (students.includes(username) && password === username) {
+                    currentUser = { username, role: 'student' };
+                    showStudentPortal();
+                } else {
+                    showError(errorBox);
+                }
+            }
+        }
+
+        function showError(errorBox) {
+            errorBox.style.display = 'block';
+            setTimeout(() => {
+                errorBox.style.display = 'none';
+            }, 3000);
+        }
+
+        function showAdminPortal() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('adminPortal').classList.remove('hidden');
+            
+            // Populate student dropdown
+            const studentSelect = document.getElementById('studentSelect');
+            studentSelect.innerHTML = '';
+            
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student;
+                option.textContent = student;
+                studentSelect.appendChild(option);
+            });
+            
+            // Populate all students list
+            const studentsList = document.getElementById('allStudentsList');
+            studentsList.innerHTML = '';
+            
+            students.forEach(student => {
+                const studentItem = document.createElement('div');
+                studentItem.className = 'student-item';
+                
+                const points = calculateTotalPoints(studentResults[student]);
+                
+                studentItem.innerHTML = `
+                    <div>${student}</div>
+                    <div><strong>${points}</strong> points</div>
+                `;
+                
+                studentsList.appendChild(studentItem);
+            });
+            
+            // Load first student's points
+            loadStudentPoints(students[0]);
+            
+            // Add event listener to student dropdown
+            studentSelect.addEventListener('change', function() {
+                loadStudentPoints(this.value);
+            });
+        }
+
+        function loadStudentPoints(studentName) {
+            const results = studentResults[studentName];
+            
+            document.getElementById('englishPoints').value = results.english;
+            document.getElementById('arabicPoints').value = results.arabic;
+            document.getElementById('urduPoints').value = results.urdu;
+            document.getElementById('itPoints').value = results.it;
+            document.getElementById('socialPoints').value = results.social;
+            document.getElementById('scienceMathPoints').value = results.scienceMath;
+        }
+
+        function savePoints() {
+            const studentName = document.getElementById('studentSelect').value;
+            const messageDiv = document.getElementById('saveMessage');
+            
+            studentResults[studentName] = {
+                english: parseInt(document.getElementById('englishPoints').value) || 0,
+                arabic: parseInt(document.getElementById('arabicPoints').value) || 0,
+                urdu: parseInt(document.getElementById('urduPoints').value) || 0,
+                it: parseInt(document.getElementById('itPoints').value) || 0,
+                social: parseInt(document.getElementById('socialPoints').value) || 0,
+                scienceMath: parseInt(document.getElementById('scienceMathPoints').value) || 0
+            };
+            
+            localStorage.setItem('studentResults', JSON.stringify(studentResults));
+            
+            messageDiv.textContent = `Points saved for ${studentName}`;
+            messageDiv.className = 'message success';
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+            
+            // Update the students list
+            showAdminPortal();
+        }
+
+        function showStudentPortal() {
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('studentPortal').classList.remove('hidden');
+            
+            document.getElementById('studentWelcome').textContent = `Welcome, ${currentUser.username}`;
+            
+            const results = studentResults[currentUser.username];
+            
+            document.getElementById('englishResult').textContent = results.english;
+            document.getElementById('arabicResult').textContent = results.arabic;
+            document.getElementById('urduResult').textContent = results.urdu;
+            document.getElementById('itResult').textContent = results.it;
+            document.getElementById('socialResult').textContent = results.social;
+            document.getElementById('scienceMathResult').textContent = results.scienceMath;
+            
+            const totalPoints = calculateTotalPoints(results);
+            document.getElementById('totalPoints').textContent = totalPoints;
+        }
+
+        function calculateTotalPoints(results) {
+            return results.english + results.arabic + results.urdu + 
+                   results.it + results.social + results.scienceMath;
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('adminPortal').classList.add('hidden');
+            document.getElementById('studentPortal').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            
+            // Clear login form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Initialize the page
+        window.onload = function() {
+            // Focus on username field
+            document.getElementById('username').focus();
+        };
+    </script>
+</body>
+</html>
